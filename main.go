@@ -47,7 +47,8 @@ func shortenURL(w http.ResponseWriter, r *http.Request) {
 	urlStore[shortCode] = req.LongURL
 
 	// Return the shortened URL
-	response := URLResponse{ShortURL: "http://localhost:8080/" + shortCode}
+	baseURL := "https://url-shortener-lb53.onrender.com/"
+	response := URLResponse{ShortURL: baseURL + shortCode}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }
