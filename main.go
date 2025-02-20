@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -72,6 +73,11 @@ func main() {
 	r.HandleFunc("/shorten", shortenURL).Methods("POST")
 	r.HandleFunc("/{shortcode}", redirectURL).Methods("GET")
 
-	// Start the server
-	http.ListenAndServe(":8080", r)
+	port := "8080"
+	if p := os.Getenv("PORT"); p != "" {
+		port = p
+	}
+
+	// Start the server on the determined port
+	http.ListenAndServe(":" + port, r)
 }
